@@ -1,18 +1,17 @@
 package it.polito.tdp.meteo.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Citta {
 	
-	
 	private String nome;
 	private List<Rilevamento> rilevamenti;
-	private int counter = 0;
-	
-	
+	private int counter = 0;	
 	
 	public Citta(String nome) {
 		this.nome = nome;
+		this.rilevamenti = new LinkedList<>();
 	}
 	
 	public Citta(String nome, List<Rilevamento> rilevamenti) {
@@ -35,6 +34,10 @@ public class Citta {
 	public void setRilevamenti(List<Rilevamento> rilevamenti) {
 		this.rilevamenti = rilevamenti;
 	}
+	
+	public void addRilevamento(Rilevamento rilevamento) {
+		this.rilevamenti.add(rilevamento);
+	}
 
 	public int getCounter() {
 		return counter;
@@ -46,6 +49,18 @@ public class Citta {
 	
 	public void increaseCounter() {
 		this.counter += 1;
+	}
+	
+	public int umiditaMediaPerMese(int mese) {
+		int totale = 0;
+		int count = 0;
+		for(Rilevamento r: this.rilevamenti) {
+			if(r.getData().getMonthValue()==mese) {
+				totale += r.getUmidita();
+				count++;
+			}
+		}
+		return totale/count;
 	}
 
 	@Override
